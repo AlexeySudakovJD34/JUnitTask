@@ -29,30 +29,32 @@ public class PhoneBookTests {
     }
 
     @Test
-    public void testAddContactToGroup_GroupNotExist() {
+    public void testAddContactToGroupNotExist() {
         //arrange
         String expectedGroupName = "Family";
         Contact expectedContact = new Contact("Sister", "+79999999999");
         //act
         sut.addContactToGroup("Family", new Contact("Sister", "+79999999999"));
+        Contact resultContact = sut.contactsMap.get(expectedGroupName).get(0);
         //assert
-        assertEquals(expectedContact, sut.contactsMap.get(expectedGroupName).get(0));
+        assertEquals(expectedContact, resultContact);
     }
 
     @Test
-    public void testAddContactToGroup_GroupExists() {
+    public void testAddContactToGroupExist() {
         //arrange
         String expectedGroupName = "Family";
         Contact expectedContact = new Contact("Sister", "+79999999999");
         sut.addContactToGroup("Family", new Contact("Brother", "+79998888888"));
         //act
         sut.addContactToGroup("Family", new Contact("Sister", "+79999999999"));
+        Contact resultContact = sut.contactsMap.get(expectedGroupName).get(1);
         //assert
-        assertEquals(expectedContact, sut.contactsMap.get(expectedGroupName).get(1));
+        assertEquals(expectedContact, resultContact);
     }
 
     @Test
-    public void testGetNameByPhone_NameExists() {
+    public void testGetNameByPhoneExist() {
         //arrange
         String expectedName = "Brother";
         sut.addContactToGroup("Family", new Contact("Brother", "+79998888888"));
@@ -63,7 +65,7 @@ public class PhoneBookTests {
     }
 
     @Test
-    public void testGetNameByPhone_NameNotExist() {
+    public void testGetNameByPhoneNotExist() {
         //arrange
         String expectedName = "NoRecord";
         sut.addContactToGroup("Family", new Contact("Brother", "+79998888888"));
